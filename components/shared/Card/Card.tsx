@@ -3,7 +3,7 @@ import { getUsers } from "@/lib/prisma/functions";
 const Card = async () => {
   const users = await getUsers();
   return (
-    <div>
+    <div className="flex gap-4 flex-wrap">
       {users.map((user) => {
         return (
           <div key={user.id} className="flex gap-2 border p-2 w-48">
