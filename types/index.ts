@@ -1,4 +1,5 @@
-export type DescFn = {
-  description: string;
-  (someArg: number): boolean;
-};
+export interface Data {
+  id: number;
+  name: string;
+  surname: string;
+}
