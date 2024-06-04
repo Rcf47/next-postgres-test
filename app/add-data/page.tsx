@@ -11,6 +11,7 @@ function AddData() {
         </Button>
 
         <h1 className="text-center text-4xl text-white">Add data</h1>
+        <DataForm />
       </div>
     </main>
   );
