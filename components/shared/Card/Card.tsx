@@ -1,4 +1,5 @@
 import DeleteData from "@/components/shared/DeleteData/DeleteData";
+import EditData from "@/components/shared/EditData/EditData";
 import { getUsers } from "@/lib/prisma/functions";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +14,7 @@ const Card = async () => {
             <div className="w-16 bg-sky-50">{user.name}</div>
             <div className="w-[250px] bg-red-300">{user.surname}</div>
             <DeleteData userId={user.id} />
+            <EditData userId={user.id} />
           </div>
         );
       })}
