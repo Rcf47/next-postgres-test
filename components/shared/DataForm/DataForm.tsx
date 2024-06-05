@@ -1,14 +1,32 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { DataFormType } from "@/types";
+import { Data, DataFormType } from "@/types";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function DataForm({ type }: { type: DataFormType }) {
+function DataForm({ userId, type }: { userId: string; type: DataFormType }) {
   const [newName, setnewName] = useState("");
   const [surname, setsurname] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    if (type === "edit") {
+      try {
+        const fetchData = async () => {
+          const response = await fetch(`/api/get-data/${userId}`, {
+            method: "GET",
+          });
+          const data: Data = await response.json();
+          setnewName(data.name);
+          setsurname(data.surname);
+        };
+        fetchData();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, [type, userId]);
 
   const handeNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setnewName(event.target.value);
@@ -20,23 +38,44 @@ function DataForm({ type }: { type: DataFormType }) {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      fetch("api/add-data", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          newName,
-          surname,
-        }),
-      });
+    if (type === "add") {
+      try {
+        fetch("api/add-data", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            newName,
+            surname,
+          }),
+        });
+      } catch (error) {
+        console.error(error);
+      }
       router.refresh();
-    } catch (error) {
-      console.error(error);
+      setnewName("");
+      setsurname("");
+    } else if (type === "edit") {
+      try {
+        fetch(`/api/edit-data/${userId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            newName,
+            surname,
+          }),
+        });
+      } catch (error) {
+        console.error(error);
+      }
+      setnewName("");
+      setsurname("");
+      router.push("/");
+      router.refresh();
     }
-    setnewName("");
-    setsurname("");
   };
   return (
     <section>
