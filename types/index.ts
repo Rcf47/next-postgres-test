@@ -3,3 +3,5 @@ export interface Data {
   name: string;
   surname: string;
 }
+
+export type DataFormType = "add" | "edit";

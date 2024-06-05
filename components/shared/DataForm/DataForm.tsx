@@ -1,10 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { DataFormType } from "@/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-function DataForm({ data, type }: { type: string }) {
+function DataForm({ type }: { type: DataFormType }) {
   const [newName, setnewName] = useState("");
   const [surname, setsurname] = useState("");
   const router = useRouter();
