@@ -9,7 +9,7 @@ function AddData() {
       <div>
         <HomeButton />
         <h1 className="text-center text-4xl text-white">Add data</h1>
-        <DataForm type="add" />
+        <DataForm userId="" type="add" />
       </div>
     </main>
   );
